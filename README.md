@@ -11,6 +11,7 @@ Helper object for reading hdf5 files and writing the results to a csv
 
 Sample usage:
 
+    from mmsongsdbtools.mmsongsdbtocsvconverter import MMSongsDbToCsvConverter
     converter = MMSongsDbToCsvConverter('mmsongsdb.csv', ['artist_name', 'tempo'])
     converter.convert_directory('.')
 
