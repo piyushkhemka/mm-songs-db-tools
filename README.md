@@ -17,7 +17,7 @@ Sample usage:
 
 ## Requirements:
 
-- pytables
+- [pytables](http://pytables.github.io/)
 
 
 ## Resources:
