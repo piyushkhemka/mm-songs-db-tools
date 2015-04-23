@@ -15,6 +15,10 @@ Sample usage:
     converter = MMSongsDbToCsvConverter('mmsongsdb.csv', ['artist_name', 'tempo'])
     converter.convert_directory('.')
 
+The second parameter for the constructor of `MMSongsDbToCsvConverter` is an optional list of attributes to fetch for your csv. Available options are listed here:
+
+[http://labrosa.ee.columbia.edu/millionsong/pages/example-track-description](http://labrosa.ee.columbia.edu/millionsong/pages/example-track-description)
+
 
 ## Requirements:
 
