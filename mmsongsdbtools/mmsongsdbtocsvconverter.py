@@ -20,12 +20,9 @@ class MMSongsDbToCsvConverter(object):
         converter.convert_directory('.')
     """
     def __init__(self, csv_filename, attrs_to_save=None):
-        logger.info("Setting up MMSongsDbToCsvConverter to save to %s",
-                    csv_filename)
+        self.csv_filename = csv_filename
         self.attrs_to_save = attrs_to_save
         self.getters = None
-        self.fp = open(csv_filename, 'w')
-        self.writer = csv.writer(self.fp)
 
     def _get_getters(self, h5):
         getters = filter(lambda key: key[:4] == 'get_' and key != 'get_num_songs',
@@ -57,14 +54,37 @@ class MMSongsDbToCsvConverter(object):
             self.writer.writerow(result)
         h5.close()
 
-    def convert_directory(self, directory):
+    def _convert_directory(self, directory):
+        """Internal function, for recursion
+        """
+        self.dirnames_seen.add(directory)
         for root, dirnames, filenames in os.walk(directory):
             filenames = filter(lambda filename: filename.endswith('.h5'),
                                filenames)
-            logger.info("convert_directory() for dir %s with %s h5 files...",
-                        root,
-                        len(filenames))
+            logger.debug("_convert_directory() for dir %s with %s h5 files...",
+                         root,
+                         len(filenames))
             for filename in sorted(filenames):
                 self._handle_h5_file(os.path.join(root, filename))
+            dirnames = [os.path.join(root, dirname) for dirname in dirnames]
+            dirnames = filter(lambda dirname: dirname not in self.dirnames_seen,
+                              dirnames)
             for dirname in sorted(dirnames):
-                self.convert_directory(os.path.join(root, dirname))
+                self._convert_directory(dirname)
+
+    def convert_directory(self, directory):
+        """External function
+
+        Wo we can:
+            - set up ish beforehand
+            - close ish down when we're done
+            - report how we did when we're done
+        """
+        logger.info("Running MMSongsDbToCsvConverter on %s - saving to %s",
+                    directory,
+                    self.csv_filename)
+        self.dirnames_seen = set()
+        with open(self.csv_filename, 'w') as self.fp:
+            self.writer = csv.writer(self.fp)
+            self._convert_directory(directory)
+        logger.info("%s dirnames seen", len(self.dirnames_seen))
