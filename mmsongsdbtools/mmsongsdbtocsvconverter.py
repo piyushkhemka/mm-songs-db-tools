@@ -65,9 +65,9 @@ class MMSongsDbToCsvConverter(object):
         for root, dirnames, filenames in os.walk(directory):
             filenames = filter(lambda filename: filename.endswith('.h5'),
                                filenames)
-            logger.debug("_convert_directory() for dir %s with %s h5 files...",
-                         root,
-                         len(filenames))
+            logger.info("_convert_directory() for dir %s with %s h5 files...",
+                        root,
+                        len(filenames))
             for filename in sorted(filenames):
                 self._handle_h5_file(os.path.join(root, filename))
             dirnames = [os.path.join(root, dirname) for dirname in dirnames]
