@@ -19,6 +19,18 @@ The second parameter for the constructor of `MMSongsDbToCsvConverter` is an opti
 
 [http://labrosa.ee.columbia.edu/millionsong/pages/example-track-description](http://labrosa.ee.columbia.edu/millionsong/pages/example-track-description)
 
+Helper command line script: `mmsongsdb_to_csv.py`.
+
+Sample usage:
+
+    ./mmsongsdb_to_csv.py <csv_filename> <directory> [<attr_to_save> <attr_to_save> ...]
+
+parameters:
+
+- `<csv_filename>` the filename of the output csv file
+- `<directory>` the name of the directory that has the `.h5` files in it
+- `<attr_to_save>` optional attributes to save in the csv file (if not specified, all attributes will be used)
+
 
 ## Requirements:
 
@@ -29,4 +41,4 @@ The second parameter for the constructor of `MMSongsDbToCsvConverter` is an opti
 
 - http://labrosa.ee.columbia.edu/millionsong/
 - https://github.com/tbertinmahieux/MSongsDB/tree/master/PythonSrc
-    - hdf5_getters.py is a direct copy straight from [https://github.com/tbertinmahieux/MSongsDB/blob/408393766dfa449da90faaf8a65aed9cc420849a/PythonSrc/hdf5_getters.py](https://github.com/tbertinmahieux/MSongsDB/blob/408393766dfa449da90faaf8a65aed9cc420849a/PythonSrc/hdf5_getters.py)
+    - hdf5\_getters.py is a direct copy straight from [https://github.com/tbertinmahieux/MSongsDB/blob/408393766dfa449da90faaf8a65aed9cc420849a/PythonSrc/hdf5_getters.py](https://github.com/tbertinmahieux/MSongsDB/blob/408393766dfa449da90faaf8a65aed9cc420849a/PythonSrc/hdf5_getters.py)
