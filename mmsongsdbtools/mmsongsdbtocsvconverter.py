@@ -25,15 +25,19 @@ class MMSongsDbToCsvConverter(object):
         self.getters = None
 
     def _get_getters(self, h5):
-        getters = filter(lambda key: key[:4] == 'get_' and key != 'get_num_songs',
-                         hdf5_getters.__dict__.keys())
-        if self.attrs_to_save:
-            getters = filter(lambda key: key[4:] in self.attrs_to_save, getters)
-            for attr in self.attrs_to_save:
-                # Sanity
-                if 'get_%s' % attr not in getters:
-                    logger.error("Missing attr %s!", attr)
-        return sorted(getters)
+        all_getters = filter(lambda key: key[:4] == 'get_' and key != 'get_num_songs',
+                             hdf5_getters.__dict__.keys())
+        if not self.attrs_to_save:
+            return sorted(all_getters)
+        getters = []
+        for attr in self.attrs_to_save:
+            attr_getter = 'get_%s' % attr
+            # Sanity
+            if attr_getter in all_getters:
+                getters.append(attr_getter)
+            else:
+                logger.error("No such attr! %s", attr_getter)
+        return getters
 
     def _handle_h5_file(self, filename):
         h5 = hdf5_getters.open_h5_file_read(filename)
