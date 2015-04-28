@@ -28,7 +28,7 @@ logger.addHandler(ch)
 
 # File handler
 cwd = os.path.dirname(os.path.realpath(__file__))
-log_filename = os.path.join(cwd, 'logs', 'mmsongsdb.log')
+log_filename = os.path.join(cwd, 'mmsongsdb.log')
 fh = logging.FileHandler(log_filename)
 fh.setLevel(logging.INFO)
 fh.setFormatter(formatter)
