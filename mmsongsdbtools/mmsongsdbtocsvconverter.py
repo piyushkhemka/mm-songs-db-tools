@@ -61,6 +61,8 @@ class MMSongsDbToCsvConverter(object):
     def _convert_directory(self, directory):
         """Internal function, for recursion
         """
+        if not os.path.exists(directory):
+            raise Exception("Directory %s doesn't exist, are you sure this is what you're looking for?" % directory)
         self.dirnames_seen.add(directory)
         for root, dirnames, filenames in os.walk(directory):
             filenames = filter(lambda filename: filename.endswith('.h5'),
